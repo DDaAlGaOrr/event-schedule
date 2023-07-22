@@ -34,15 +34,15 @@ export class EventsController {
             .json(await this.eventService.findOne(params.id))
     }
     @Put(':id')
-    update(@Param() params: any, @Res() res: Response) {
+    async update(@Param() params: any, @Body() body, @Res() res: Response) {
         return res
             .status(HttpStatus.OK)
-            .json(this.eventService.update(params.id))
+            .json(await this.eventService.update(params.id, body))
     }
     @Delete(':id')
     async delete(@Param() params: any, @Res() res: Response) {
         return res
-            .status(HttpStatus.OK)
+            .status(HttpStatus.NO_CONTENT)
             .json(await this.eventService.delete(params.id))
     }
 }
