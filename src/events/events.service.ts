@@ -1,20 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/sequelize'
 
+import { events } from './models/event.model'
 @Injectable()
 export class EventService {
-  create(event: any) {
-    return 'this service create an event';
-  }
-  findAll() {
-    return 'this service find all events';
-  }
-  findOne(id: any) {
-    return `this service find a event with id ${id}`;
-  }
-  update(id: any) {
-    return `this service update a event with id ${id}`;
-  }
-  delete(id: any) {
-    return `this service delete a event with id ${id}`;
-  }
+    constructor(
+        @InjectModel(events) // Inyectamos el modelo de Sequelize
+        private eventModel: typeof events,
+    ) {}
+    async create(event: any): Promise<events> {
+        return await this.eventModel.create(event)
+    }
+    async findAll() {
+        return await this.eventModel.findAll()
+    }
+    async findOne(id: any) {
+        return await this.eventModel.findByPk(id)
+    }
+    update(id: any) {
+        return `this service update a event with id ${id}`
+    }
+    async delete(id: any) {
+        const user = await this.eventModel.findByPk(id)
+        return await user.destroy()
+    }
 }
