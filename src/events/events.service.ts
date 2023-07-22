@@ -18,7 +18,6 @@ export class EventService {
         return await this.eventModel.findByPk(id)
     }
     async update(id: any, body) {
-        console.log(body)
         const event = await this.eventModel.findByPk(id)
         await event.update(body)
         return `this service update a event with id ${id}`

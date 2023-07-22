@@ -19,14 +19,4 @@ export class events extends Model {
 
     @Column({ type: DataType.STRING, allowNull: true })
     location: string
-
-    // @Column({
-    //     type: DataType.DATE,
-    //     allowNull: true,
-    //     defaultValue: DataType.NOW,
-    // })
-    // created_at: string
-
-    // @Column({ type: DataType.DATE, allowNull: true })
-    // updated_at: string
 }
