@@ -14,7 +14,7 @@ export class events extends Model {
     @Column({ type: DataType.DATEONLY, allowNull: false })
     start_time: string
 
-    @Column({ type: DataType.DATE, allowNull: false })
+    @Column({ type: DataType.DATEONLY, allowNull: false })
     end_time: string
 
     @Column({ type: DataType.STRING, allowNull: true })
