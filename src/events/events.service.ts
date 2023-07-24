@@ -28,13 +28,13 @@ export class EventService {
         if (start_time < today) {
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: 'the start or end date cannot be a date before today',
+                message: 'the start cannot be a date before today',
             }
         }
         if (end_time < today) {
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
-                message: 'the start or end date cannot be a date before today',
+                message: 'the end date cannot be a date before today',
             }
         }
         if (start_time > end_time) {
@@ -53,32 +53,30 @@ export class EventService {
 
         const createEvent = await this.eventModel.create(eventDataToCreate)
 
-        if (createEvent) {
-            return {
-                statusCode: HttpStatus.CREATED,
-                message: 'event created',
-            }
-        } else {
+        if (!createEvent) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: 'something went wrong, could not save the event',
             }
         }
+        return {
+            statusCode: HttpStatus.CREATED,
+            message: 'Event created',
+        }
     }
 
     async findAll(): Promise<ResponseInterface> {
         const events = await this.eventModel.findAll()
-        if (events) {
-            return {
-                statusCode: HttpStatus.OK,
-                message: 'success',
-                events: events,
-            }
-        } else {
+        if (!events) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-                message: 'No found events',
+                message: 'Events not found',
             }
+        }
+        return {
+            statusCode: HttpStatus.OK,
+            message: 'success',
+            events: events,
         }
     }
 
@@ -87,7 +85,7 @@ export class EventService {
         if (!event) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
-                message: 'No found event',
+                message: 'Event not found',
             }
         }
         return {
@@ -108,7 +106,7 @@ export class EventService {
         await event.update(body)
         return {
             statusCode: HttpStatus.OK,
-            message: `this service updated a event with id ${id}`,
+            message: `updated event`,
         }
     }
 
