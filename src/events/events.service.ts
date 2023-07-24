@@ -2,7 +2,7 @@ import { Injectable, HttpStatus } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
 
 import { events } from './models/event.model'
-import { ApiResponse, CreateEvent } from './event.interface'
+import { ResponseInterface, EventInterface } from './event.interface'
 @Injectable()
 export class EventService {
     constructor(
@@ -10,8 +10,8 @@ export class EventService {
         private eventModel: typeof events,
     ) {}
 
-    async create(event: CreateEvent): Promise<ApiResponse> {
-        const eventDataToCreate: Omit<CreateEvent, 'event_id'> = {
+    async create(event: EventInterface): Promise<ResponseInterface> {
+        const eventDataToCreate: Omit<EventInterface, 'event_id'> = {
             ...event,
         }
         const start_time = new Date(event.start_time).toLocaleDateString(
@@ -66,7 +66,7 @@ export class EventService {
         }
     }
 
-    async findAll(): Promise<ApiResponse> {
+    async findAll(): Promise<ResponseInterface> {
         const events = await this.eventModel.findAll()
         if (events) {
             return {
@@ -82,7 +82,7 @@ export class EventService {
         }
     }
 
-    async findOne(id: number): Promise<ApiResponse> {
+    async findOne(id: number): Promise<ResponseInterface> {
         const event = await this.eventModel.findByPk(id)
         if (!event) {
             return {
@@ -97,7 +97,7 @@ export class EventService {
         }
     }
 
-    async update(id: any, body): Promise<ApiResponse> {
+    async update(id: number, body: EventInterface): Promise<ResponseInterface> {
         const event = await this.eventModel.findByPk(id)
         if (!event) {
             return {
@@ -112,7 +112,7 @@ export class EventService {
         }
     }
 
-    async delete(id: any) {
+    async delete(id: number) {
         const user = await this.eventModel.findByPk(id)
         return await user.destroy()
     }
