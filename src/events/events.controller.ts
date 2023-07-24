@@ -2,7 +2,6 @@ import {
     Controller,
     Get,
     Res,
-    Req,
     HttpStatus,
     Post,
     Param,
@@ -10,7 +9,7 @@ import {
     Delete,
     Body,
 } from '@nestjs/common'
-import { Request, Response } from 'express'
+import { Response } from 'express'
 
 import { EventService } from './events.service'
 import { CreateEventDto, UpdateEventDto } from './event.dto'
