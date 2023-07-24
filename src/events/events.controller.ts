@@ -46,9 +46,11 @@ export class EventsController {
         @Body() body: UpdateEventDto,
         @Res() res: Response,
     ) {
-        return res
-            .status(HttpStatus.OK)
-            .json(await this.eventService.update(params.id, body))
+        const response: ResponseInterface = await this.eventService.update(
+            params.id,
+            body,
+        )
+        return res.status(response.statusCode).json(response)
     }
 
     @Delete(':id')
