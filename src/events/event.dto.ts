@@ -22,3 +22,21 @@ export class CreateEventDto {
     @IsString()
     location: string
 }
+export class UpdateEventDto {
+    @IsString()
+    title: string
+
+    @IsString()
+    description: string
+
+    @Type(() => Date)
+    @IsDate({ message: 'wrong data type for start date' })
+    start_time: string
+
+    @Type(() => Date)
+    @IsDate({ message: 'wrong data type for end date' })
+    end_time: string
+
+    @IsString()
+    location: string
+}

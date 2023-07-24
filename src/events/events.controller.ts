@@ -13,7 +13,7 @@ import {
 import { Request, Response } from 'express'
 
 import { EventService } from './events.service'
-import { CreateEventDto } from './event.dto'
+import { CreateEventDto, UpdateEventDto } from './event.dto'
 import { ResponseInterface, IdParamInterface } from './event.interface'
 
 @Controller('events')
@@ -43,7 +43,7 @@ export class EventsController {
     @Put(':id')
     async update(
         @Param() params: IdParamInterface,
-        @Body() body,
+        @Body() body: UpdateEventDto,
         @Res() res: Response,
     ) {
         return res
