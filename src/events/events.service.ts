@@ -12,7 +12,6 @@ export class EventService {
     ) {}
 
     async create(event: CreateEventDto): Promise<ResponseInterface> {
-        const { ...eventData } = event
         const start_time = new Date(event.start_time)
         const end_time = new Date(event.end_time)
 
@@ -31,7 +30,13 @@ export class EventService {
                 status: false,
             }
         }
-
+        const eventData = {
+            title: event.title,
+            description: event.description,
+            start_time: start_time,
+            end_time: end_time,
+            location: event.location,
+        }
         const createEvent = await this.eventModel.create(eventData)
 
         if (!createEvent) {
