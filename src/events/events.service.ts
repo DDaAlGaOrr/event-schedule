@@ -7,7 +7,7 @@ import { CreateEventDto, SortEventsDto } from './event.dto'
 @Injectable()
 export class EventService {
     constructor(
-        @InjectModel(events) // Inyectamos el modelo de Sequelize
+        @InjectModel(events)
         private eventModel: typeof events,
     ) {}
 
