@@ -10,6 +10,7 @@ export interface ResponseInterface {
 
 export interface EventInterface {
     event_id?: number
+    uuid?: number
     title: string
     description: string
     start_time: string

@@ -1,5 +1,6 @@
 import { Injectable, HttpStatus } from '@nestjs/common'
 import { InjectModel } from '@nestjs/sequelize'
+import { v4 as uuidv4 } from 'uuid'
 
 import { events } from './models/event.model'
 import { ResponseInterface, EventInterface } from './event.interface'
@@ -31,6 +32,7 @@ export class EventService {
             }
         }
         const eventData = {
+            uuid: uuidv4(),
             title: event.title,
             description: event.description,
             start_time: start_time,
