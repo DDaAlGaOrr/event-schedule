@@ -1,4 +1,10 @@
-import { IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator'
+import {
+    IsNotEmpty,
+    IsString,
+    IsDate,
+    IsOptional,
+    IsNumber,
+} from 'class-validator'
 import { Type } from 'class-transformer'
 
 export class CreateEventDto {
@@ -44,4 +50,17 @@ export class UpdateEventDto {
     @IsOptional()
     @IsString()
     location: string
+}
+export class SortEventsDto {
+    @IsOptional()
+    @IsString()
+    sort: string
+
+    @IsOptional()
+    @IsNumber()
+    pageNumber: number
+
+    @IsOptional()
+    @IsNumber()
+    itemsPerPage: number
 }

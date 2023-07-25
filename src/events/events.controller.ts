@@ -12,7 +12,7 @@ import {
 import { Response } from 'express'
 
 import { EventService } from './events.service'
-import { CreateEventDto, UpdateEventDto } from './event.dto'
+import { CreateEventDto, SortEventsDto, UpdateEventDto } from './event.dto'
 import { ResponseInterface, IdParamInterface } from './event.interface'
 
 @Controller('events')
@@ -26,8 +26,10 @@ export class EventsController {
     }
 
     @Get()
-    async findAll(@Res() res: Response) {
-        const response: ResponseInterface = await this.eventService.findAll()
+    async findAll(@Res() res: Response, @Body() body: SortEventsDto) {
+        const response: ResponseInterface = await this.eventService.findAll(
+            body,
+        )
         return res.status(response.statusCode).json(response)
     }
 

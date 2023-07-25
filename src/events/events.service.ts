@@ -3,8 +3,7 @@ import { InjectModel } from '@nestjs/sequelize'
 
 import { events } from './models/event.model'
 import { ResponseInterface, EventInterface } from './event.interface'
-import { stringify } from 'querystring'
-import { CreateEventDto } from './event.dto'
+import { CreateEventDto, SortEventsDto } from './event.dto'
 @Injectable()
 export class EventService {
     constructor(
@@ -49,8 +48,17 @@ export class EventService {
         }
     }
 
-    async findAll(): Promise<ResponseInterface> {
-        const events = await this.eventModel.findAll()
+    async findAll(body: SortEventsDto): Promise<ResponseInterface> {
+        const order = body.sort ? body.sort.toUpperCase() : 'ASC'
+        const pageNumber = body.pageNumber || 1
+        const itemsPerPage = body.itemsPerPage || 5
+        const offset = (pageNumber - 1) * itemsPerPage
+        const events = await this.eventModel.findAll({
+            order: [['start_time', order]],
+            offset,
+            limit: itemsPerPage,
+        })
+
         if (!events) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
