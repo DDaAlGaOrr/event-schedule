@@ -3,6 +3,8 @@ import { InjectModel } from '@nestjs/sequelize'
 
 import { events } from './models/event.model'
 import { ResponseInterface, EventInterface } from './event.interface'
+import { stringify } from 'querystring'
+import { CreateEventDto } from './event.dto'
 @Injectable()
 export class EventService {
     constructor(
@@ -10,33 +12,13 @@ export class EventService {
         private eventModel: typeof events,
     ) {}
 
-    async create(event: EventInterface): Promise<ResponseInterface> {
-        const eventDataToCreate: Omit<EventInterface, 'event_id'> = {
+    async create(event: CreateEventDto): Promise<ResponseInterface> {
+        const eventDataToCreate: Omit<CreateEventDto, 'event_id'> = {
             ...event,
         }
-        const start_time = new Date(event.start_time).toLocaleDateString(
-            'es-MX',
-            { timeZone: 'America/Mazatlan' },
-        )
-        const end_time = new Date(event.end_time).toLocaleDateString('es-MX', {
-            timeZone: 'America/Mazatlan',
-        })
-        const today = new Date().toLocaleDateString('es-MX', {
-            timeZone: 'America/Mazatlan',
-        })
+        const start_time = new Date(event.start_time)
+        const end_time = new Date(event.end_time)
 
-        if (start_time < today) {
-            return {
-                statusCode: HttpStatus.BAD_REQUEST,
-                message: 'the start cannot be a date before today',
-            }
-        }
-        if (end_time < today) {
-            return {
-                statusCode: HttpStatus.BAD_REQUEST,
-                message: 'the end date cannot be a date before today',
-            }
-        }
         if (start_time > end_time) {
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
