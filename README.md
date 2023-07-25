@@ -45,28 +45,43 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Test
+## EndPoints
 
 ```bash
-# unit tests
-$ npm run test
+# Create a new event.
+POST /events
+# Retrieve all events.
+GET /events
+# Retrieve a single event by its event_id.
+GET /events/:id
+# Update an existing event by its event_id.
+PUT /events/:id
+# Delete an existing event by its event_id.
+DELETE /events/:id
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
 
-## Support
+## Additional features
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+-   Sort by start_time
 
-## Stay in touch
+```bash
+GET /events
+{
+  "sort": "ASC"|"DESC",
+}
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+
+-   Pagination
+
+```bash
+GET /events
+{
+  "page": actualPage,
+  "pageSize": limitPerPage
+}
+```
 
 ## License
 
