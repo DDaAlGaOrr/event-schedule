@@ -13,9 +13,7 @@ export class EventService {
     ) {}
 
     async create(event: CreateEventDto): Promise<ResponseInterface> {
-        const eventDataToCreate: Omit<CreateEventDto, 'event_id'> = {
-            ...event,
-        }
+        const { ...eventData } = event
         const start_time = new Date(event.start_time)
         const end_time = new Date(event.end_time)
 
@@ -23,6 +21,7 @@ export class EventService {
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
                 message: 'the start date cannot be later than the end date',
+                status: false,
             }
         }
         if (end_time < start_time) {
@@ -30,20 +29,23 @@ export class EventService {
                 statusCode: HttpStatus.BAD_REQUEST,
                 message:
                     'the end date date cannot be earlier than the start date',
+                status: false,
             }
         }
 
-        const createEvent = await this.eventModel.create(eventDataToCreate)
+        const createEvent = await this.eventModel.create(eventData)
 
         if (!createEvent) {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: 'something went wrong, could not save the event',
+                status: false,
             }
         }
         return {
             statusCode: HttpStatus.CREATED,
             message: 'Event created',
+            status: true,
         }
     }
 
@@ -53,12 +55,14 @@ export class EventService {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: 'Events not found',
+                status: false,
             }
         }
         return {
             statusCode: HttpStatus.OK,
-            message: 'success',
+            message: 'Events found',
             events: events,
+            status: true,
         }
     }
 
@@ -68,12 +72,14 @@ export class EventService {
             return {
                 statusCode: HttpStatus.INTERNAL_SERVER_ERROR,
                 message: 'Event not found',
+                status: false,
             }
         }
         return {
             statusCode: HttpStatus.OK,
-            message: 'success',
+            message: 'Event found',
             event: event,
+            status: true,
         }
     }
 
@@ -83,12 +89,14 @@ export class EventService {
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
                 message: 'Event not found',
+                status: false,
             }
         }
         await event.update(body)
         return {
             statusCode: HttpStatus.OK,
             message: `updated event`,
+            status: true,
         }
     }
 
@@ -98,12 +106,14 @@ export class EventService {
             return {
                 statusCode: HttpStatus.BAD_REQUEST,
                 message: 'Event not found',
+                status: false,
             }
         }
         await user.destroy()
         return {
             statusCode: HttpStatus.OK,
             message: `deleted event`,
+            status: true,
         }
     }
 }

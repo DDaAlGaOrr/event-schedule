@@ -3,6 +3,7 @@ import { events } from './models/event.model'
 export interface ResponseInterface {
     statusCode: number
     message: string
+    status: boolean
     events?: events[]
     event?: events
 }
