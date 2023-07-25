@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsDate } from 'class-validator'
+import { IsNotEmpty, IsString, IsDate, IsOptional } from 'class-validator'
 import { Type } from 'class-transformer'
 
 export class CreateEventDto {
@@ -23,20 +23,25 @@ export class CreateEventDto {
     location: string
 }
 export class UpdateEventDto {
+    @IsOptional()
     @IsString()
     title: string
 
+    @IsOptional()
     @IsString()
     description: string
 
+    @IsOptional()
     @Type(() => Date)
     @IsDate({ message: 'wrong data type for start date' })
     start_time: string
 
+    @IsOptional()
     @Type(() => Date)
     @IsDate({ message: 'wrong data type for end date' })
     end_time: string
 
+    @IsOptional()
     @IsString()
     location: string
 }
