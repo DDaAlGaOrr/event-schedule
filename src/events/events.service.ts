@@ -92,8 +92,18 @@ export class EventService {
         }
     }
 
-    async delete(id: number) {
+    async delete(id: number): Promise<ResponseInterface> {
         const user = await this.eventModel.findByPk(id)
-        return await user.destroy()
+        if (!user) {
+            return {
+                statusCode: HttpStatus.BAD_REQUEST,
+                message: 'Event not found',
+            }
+        }
+        await user.destroy()
+        return {
+            statusCode: HttpStatus.OK,
+            message: `deleted event`,
+        }
     }
 }

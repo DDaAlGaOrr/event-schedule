@@ -54,8 +54,9 @@ export class EventsController {
 
     @Delete(':id')
     async delete(@Param() params: IdParamInterface, @Res() res: Response) {
-        return res
-            .status(HttpStatus.NO_CONTENT)
-            .json(await this.eventService.delete(params.id))
+        const response: ResponseInterface = await this.eventService.delete(
+            params.id,
+        )
+        return res.status(response.statusCode).json(response)
     }
 }
