@@ -83,6 +83,12 @@ GET /events
 }
 ```
 
+## technologies implemented
+
+-   Nest js
+-   sequelize
+-   Mysql
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
