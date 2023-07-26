@@ -63,7 +63,7 @@ DELETE /events/:id
 
 ## Additional features
 
--   Sort by start_time
+-   Sort by start time
 
 ```bash
 GET /events
